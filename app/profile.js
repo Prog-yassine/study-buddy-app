@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaVi
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons, Ionicons, Feather } from '@expo/vector-icons';
 import { supabase } from './supabase';
-const Profile = () => {
+const Profile = ({userData}) => {
   const navigation = useNavigation();
+  
    
   const Bolt = () => {
     Alert.alert(
@@ -18,14 +19,14 @@ const Profile = () => {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{width: '100%', backgroundColor: '#fff', padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 10, marginVertical: 10}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={{uri: 'https://randomuser.me/api/portraits/men/1.jpg'}} style={{width: 50, height: 50, borderRadius: 1000}}/>
+            <Image source={{uri: userData?.user?.avatar}} style={{width: 50, height: 50, borderRadius: 1000}}/>
             <View style={{flexDirection: 'column', marginLeft: 7}}>
-              <Text style={{fontSize: 16, fontWeight: 600}}>Yassine Aboutaib</Text>
-              <Text style={{fontSize: 15, fontWeight: 300}}>yassineaboutaib@gmail.com</Text>
+              <Text style={{fontSize: 16, fontWeight: 600}}>{userData?.user?.fullname}</Text>
+              <Text style={{fontSize: 15, fontWeight: 300}}>{userData?.user?.email}</Text>
             </View>
           </View>
           <TouchableOpacity onPress={Bolt} style={{ paddingHorizontal: 15, paddingVertical: 7, borderRadius: 100, borderColor: '#007AFF', borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text style={{color: '#007AFF', marginRight: 3}}>31k</Text>
+            <Text style={{color: '#007AFF', marginRight: 3}}>{userData?.user?.bolt}</Text>
             <MaterialIcons name="bolt" size={19} color="#007AFF" />
           </TouchableOpacity>
         </View>

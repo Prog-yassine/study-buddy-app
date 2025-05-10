@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function Session({data}) {
+export default function Mentor({data}) {
   const navigation = useNavigation();
   const visibleAvatars = data?.members.slice(0, 4);
   const extraCount = data?.members.length - visibleAvatars.length;
   const [requested, setRequested] = useState(false);
 
 
-  // Add 6 days (6 * 24 * 60 * 60 * 1000 milliseconds)
+
 
 
 
@@ -41,6 +41,7 @@ export default function Session({data}) {
       onPress={() => navigation.navigate('Session_details', { data: Session_data })}
     >
       <View style={styles.nav}>
+        <Image source={{uri: 'https://yalmhjjptrpgypgouujm.supabase.co/storage/v1/object/public/avatar//bdccde33dea7c9e549b325635d2c432e.jpg'}} style={{width: 60, height: 60, objectFit: 'cover', borderRadius: 9}}/>
         <View style={styles.subject}>
           <Text style={styles.subjectText} numberOfLines={1} ellipsizeMode="tail">
             {data?.subject}
@@ -53,32 +54,10 @@ export default function Session({data}) {
 
         <View style={styles.memberCountBox}>
           <Text style={styles.memberCountText}>
-            {data?.members.length} / {data?.max_members}
+            10$
           </Text>
-          <Text style={styles.memberCountSub}>join</Text>
+          <Text style={styles.memberCountSub}>/hour</Text>
         </View>
-      </View>
-
-
-      <View style={styles.avatarGroup}>
-        {visibleAvatars.map((item, index) => (
-          <Image
-            key={index}
-            source={{ uri: item.avatar }}
-            style={[styles.avatar, { left: index * 20, zIndex: 10 + index }]}
-          />
-        ))}
-        {extraCount > 0 && (
-          <View
-            style={[
-              styles.avatar,
-              styles.extraAvatar,
-              { left: visibleAvatars.length * 20 },
-            ]}
-          >
-            <Text style={styles.extraText}>+{extraCount}</Text>
-          </View>
-        )}
       </View>
   
       <View style={styles.footer}>

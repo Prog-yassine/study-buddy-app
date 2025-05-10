@@ -9,7 +9,7 @@ const START_HOUR = 0; // Start at midnight
 const END_HOUR = 24;  // End at midnight next day
 const INITIAL_SCROLL_HOUR = 7;
 
-export default function Calendar({ data }) {
+export default function Calendar({ userData }) {
   const Dataevents = [
     {
       id: 1,
@@ -25,7 +25,7 @@ export default function Calendar({ data }) {
       timeEnd: '12:30',
       title: 'Event 1',
       data: '2025-05-08',
-      color: '#4285F4',
+      color: '#023047',
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ export default function Calendar({ data }) {
       timeEnd: '12:00',
       title: 'Event 2',
       data: '2025-05-09',
-      color: '#4285F4',
+      color: '#3a5a40',
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ export default function Calendar({ data }) {
       timeEnd: '09:00',
       title: 'Event 2',
       data: '2025-05-10',
-      color: '#4285F4',
+      color: '#0077b6',
     },
     {
       id: 5,
@@ -49,7 +49,7 @@ export default function Calendar({ data }) {
       timeEnd: '13:00',
       title: 'Event 2',
       data: '2025-05-10',
-      color: '#4285F4',
+      color: '#4f772d',
     },
   ];
 
@@ -63,7 +63,7 @@ export default function Calendar({ data }) {
     day: selectedDay
   });
   const [ShowSearch, setShowSearch] = useState(false);
-
+  console.log(allEvents)
   const selectedDate = selectedDateMoment.format('YYYY-MM-DD');
   const isToday = selectedDateMoment.isSame(moment(), 'day');
   const navigation = useNavigation();
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
+    zIndex: 1000,
   },
   event: {
     position: 'absolute',

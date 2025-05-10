@@ -214,7 +214,7 @@ export default function Create_session() {
             <View style={{ position: 'relative' }}>
               <TouchableOpacity
                 style={styles.mapContainer}
-                onPress={() => navigation.navigate('pick_location', { setPosition: setLocation })}
+                onPress={() => navigation.navigate('pick_location')}
                 disabled={onlineSession} // Prevents interaction if online_session is true
               >
                 <MapView

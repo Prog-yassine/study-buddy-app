@@ -40,20 +40,10 @@ export default function Pick_Location({ navigation, route }) {
   const [location, setLocation] = useState(predefinedLocations[2]);
 
   const mapRef = useRef(null);
-  const setPosition = route.params.setPosition({
-    id: location.id,
-    title: location.title,
-    description: location.description,
-    latitude: location.latitude,
-    longitude: location.longitude,
-  });
+
   
 
   const applyLocation = () => {
-    if (setPosition) {
-      const { id, title, description, latitude, longitude } = location;
-      setPosition({ id, title, description, latitude, longitude });
-    }
     navigation.goBack();
   };
   

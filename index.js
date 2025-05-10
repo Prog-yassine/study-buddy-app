@@ -24,11 +24,12 @@ import Message from './app/message';
 import Fav from './app/fav';
 import Login from './app/login';
 import Register from './app/register';
+import Session from './app/components/session';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabsNavigator = ({sessions}) => (
+const TabsNavigator = ({sessions , userData}) => (
   
   <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -60,7 +61,7 @@ const TabsNavigator = ({sessions}) => (
       {() => <Home sessions={sessions}/>}
     </Tab.Screen>
     <Tab.Screen name="Calendar">
-      {() => <Calendar/>}
+      {() => <Calendar userData={userData}/>}
     </Tab.Screen>
     <Tab.Screen name="Create">
       {() => <Create_session />}
@@ -69,12 +70,12 @@ const TabsNavigator = ({sessions}) => (
       {() => <Chat />}
     </Tab.Screen>
     <Tab.Screen name="Profile">
-      {() => <Profile />}
+      {() => <Profile userData={userData}/>}
     </Tab.Screen>
   </Tab.Navigator>
 );
 
-const MainStack = ({ isLoggedIn, sessions }) => {
+const MainStack = ({ isLoggedIn, sessions, userData }) => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -85,7 +86,7 @@ const MainStack = ({ isLoggedIn, sessions }) => {
         {isLoggedIn ? (
           <>
             <Stack.Group screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Main" component={() => <TabsNavigator sessions={sessions}/>}/>
+              <Stack.Screen name="Main" component={() => <TabsNavigator sessions={sessions} userData={userData}/>}/>
               <Stack.Screen name="Message" component={Message} />
             </Stack.Group>
             <Stack.Group screenOptions={{ headerShown: true, presentation: 'modal' }}>
@@ -115,45 +116,66 @@ const MainStack = ({ isLoggedIn, sessions }) => {
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sessions, setSessions] = useState([])
+  const [sessions, setSessions] = useState([]);
+  const [userData,  setuserData] = useState();
+  const [userSession, setUserSession] = useState();
+
   useEffect(() => {
-    // Check if the user is logged in
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setIsLoggedIn(!!session);
       setLoading(false);
 
-      // Fetch API if session exists
       if (session) {
-        fetchAPI();
+        setUserSession(session.user.id); // This will trigger the useEffect for fetchUserData
+        fetchSessions();
       }
     };
 
     checkSession();
 
-    // Listen for auth state changes
     const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(!!session);
 
-      // Fetch API if session exists
       if (session) {
-        fetchAPI();
+        setUserSession(session.user.id); // This will trigger the useEffect for fetchUserData
+        fetchSessions();
       }
     });
 
-    // Cleanup subscription on unmount
     return () => {
       subscription.unsubscribe();
     };
   }, []);
 
-  const fetchAPI = async () => {
+  useEffect(() => {
+    if (userSession) {
+      fetchUserData();
+    }
+  }, [userSession]);
+
+  const fetchSessions = async () => {
     try {
       const response = await fetch('https://study-buddy-api-production.up.railway.app/session/sessions-open'); // Replace with your API URL
       const data = await response.json();
       setSessions(data?.sessions);
     } catch (error) {
       console.error('Error fetching API:', error);
+    }
+  };
+
+
+  const fetchUserData = async () => {
+    try {
+      if (userSession) {
+        const response = await fetch('https://study-buddy-api-production.up.railway.app/user/' + userSession);
+        const data = await response.json();
+        setuserData(data);
+      } else {
+        console.warn('User session is undefined. Cannot fetch user data.');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
     }
   };
 
@@ -167,7 +189,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainStack isLoggedIn={isLoggedIn} sessions={sessions}/>
+      <MainStack isLoggedIn={isLoggedIn} sessions={sessions} userData={userData}/>
     </NavigationContainer>
   );
 }
