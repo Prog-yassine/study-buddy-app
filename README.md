@@ -14,22 +14,22 @@ Bienvenue sur **StudyBuddy**, une application conçue pour connecter les étudia
 ## 🖼️ Captures d’écran
 
 ### Page d’accueil  
-<img src="screenshots/homepage.png" alt="Page d’accueil" width="100%" style="max-width: 400px; display: block; margin: auto;" />
+<img src="screenshots/homepage.png" alt="Page d’accueil" width="100%"  />
 
 ---
 
 ### Profil d’un mentor  
-<img src="screenshots/mentor-profile.png" alt="Profil d’un mentor" width="100%" style="max-width: 400px; display: block; margin: auto;" />
+<img src="screenshots/mentor-profile.png" alt="Profil d’un mentor" width="100%"  />
 
 ---
 
 ### Messagerie instantanée  
-<img src="screenshots/chat.png" alt="Messagerie" width="100%" style="max-width: 400px; display: block; margin: auto;" />
+<img src="screenshots/chat.png" alt="Messagerie" width="100%"  />
 
 ---
 
 ### Planification d'une session  
-<img src="screenshots/schedule-session.png" alt="Planification" width="100%" style="max-width: 400px; display: block; margin: auto;" />
+<img src="screenshots/schedule-session.png" alt="Planification" width="300"  />
 
 ---
 
