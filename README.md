@@ -36,7 +36,7 @@ Bienvenue sur **StudyBuddy**, une application conçue pour connecter les étudia
 ## 🚀 Lancer l’application en local
 
 ```bash
-git clone https://github.com/votre-utilisateur/studybuddy.git
+git clone https://github.com/Prog-yassine/study-buddy-app.git
 cd studybuddy
 npm install
 npm run dev
